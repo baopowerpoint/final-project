@@ -1,59 +1,128 @@
-import React from "react";
-import SelectBar from "./SelectBar";
+import React, { useEffect, useState } from "react";
+import { useCollection } from "../hooks/useCollection";
+import PageLoading from "./PageLoading";
+import { motion } from "framer-motion";
+import { useMotion } from "../motion/useMotion";
+import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Productions = () => {
+  const { documents } = useCollection("posts");
+  const [filteredProductions, setFilteredProductions] = useState(null);
+  const [category, setCategory] = useState("");
+  const { textMotion, imageMotion } = useMotion();
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (documents) {
+      if (category == "") {
+        setFilteredProductions(documents);
+      }
+      if (category == "hoavai") {
+        setFilteredProductions(
+          documents.filter((val) => val.category === "hoavai")
+        );
+      }
+      if (category == "dinhket") {
+        setFilteredProductions(
+          documents.filter((val) => val.category === "dinhket")
+        );
+      }
+      if (category == "doda") {
+        setFilteredProductions(
+          documents.filter((val) => val.category === "doda")
+        );
+      }
+      if (category == "huyhieu") {
+        setFilteredProductions(
+          documents.filter((val) => val.category === "huyhieu")
+        );
+      }
+      if (category == "resindohat") {
+        setFilteredProductions(
+          documents.filter((val) => val.category === "resindohat")
+        );
+      }
+    }
+  }, [category, documents]);
+
   return (
     <div>
-      <p className="text-center uppercase text-headline4 mt-20 my-5">
+      <motion.p
+        variants={textMotion(1.1, 2, "linear")}
+        initial="hidden"
+        animate="visible"
+        className="text-center uppercase text-headline4 mt-5 my-5"
+      >
         Sản phẩm
-      </p>
-      <SelectBar />
-      <div className="grid grid-cols-3  gap-5">
-        <div className="w-full h-fit shadow-sm">
-          <img
-            src="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/277480071_3112539678988925_4173511212442116183_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=0debeb&_nc_ohc=lMS3tqy4bjYAX_m3wHe&_nc_oc=AQmkms7Bx9J1eCcJvyW1E2PrdXiYhl6y-xbBxvUOFuEEPneqQHKL18Pl6ZA1QBm-lsQ&_nc_ht=scontent.fhan2-4.fna&oh=00_AT9EVzE84RfGO06RNdpYnZ5kPj8oJw_RDg-RunoFNSk6KA&oe=62A904B6"
-            alt=""
-            className="w-full h-full "
-          />
-          <div className="text-center m-5">
-            <p className="text-body2">Đính kết</p>
-            <p className="font-500 text-body1">100.000 VNĐ</p>
-          </div>
+      </motion.p>
+      <motion.div
+        variants={textMotion(1.3, 2, "linear")}
+        initial="hidden"
+        animate="visible"
+        className="flex justify-center gap-5 my-5"
+      >
+        <div className="mb-3 w-2/3">
+          <select
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+            className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            aria-label="Default select example"
+          >
+            <option value="">Các sản phẩm nổi bật</option>
+            <option value="dinhket">Đính kết</option>
+            <option value="hoavai">Hoa vải</option>
+            <option value="doda">Đồ da</option>
+            <option value="huyhieu">Huy hiệu</option>
+            <option value="resindohat">Resin, đổ hạt</option>
+          </select>
         </div>
-        <div className="w-full h-fit shadow-sm">
-          <img
-            src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/274525103_3087665631476330_7176305427717726523_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=0debeb&_nc_ohc=mcZ5LODUMi8AX9zWJqQ&_nc_ht=scontent.fhan2-3.fna&oh=00_AT-HUrwNIoUyuXy0LJUv2IKEgTYX1h8FsOKk2zY9VeFFfQ&oe=62AB2A99"
-            alt=""
-            className="w-full h-full "
-          />
-          <div className="text-center m-5">
-            <p className="text-body2">Đính kết</p>
-            <p className="font-500 text-body1">100.000 VNĐ</p>
-          </div>
-        </div>
-        <div className="w-full h-fit shadow-sm">
-          <img
-            src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/275933728_3104387769804116_8676722135514019079_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0debeb&_nc_ohc=k7z6pDDIoUIAX9QRDUe&_nc_ht=scontent.fhan2-3.fna&oh=00_AT8_lfFgv2lt_Sz84zZxz8W1XouwbUGk7vvSu6lina9aAw&oe=62AA96DF"
-            alt=""
-            className="w-full h-full "
-          />
-          <div className="text-center m-5">
-            <p className="text-body2">Đính kết</p>
-            <p className="font-500 text-body1">100.000 VNĐ</p>
-          </div>
-        </div>
-        <div className="w-fit h-fit shadow-sm">
-          <img
-            src="https://scontent.fhan2-1.fna.fbcdn.net/v/t39.30808-6/275982977_3105876366321923_1209458469932564844_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=0debeb&_nc_ohc=-XIW1qpAr9kAX97WKRp&_nc_ht=scontent.fhan2-1.fna&oh=00_AT9BC5UUW_ggffD9j5yeYZuBcJkdp9VDpx3KYC1hw6vwZw&oe=62A9F043"
-            alt=""
-            className="w-full h-full "
-          />
-          <div className="text-center m-5">
-            <p className="text-body2">Đính kết</p>
-            <p className="font-500 text-body1 ">100.000 VNĐ</p>
-          </div>
-        </div>
+      </motion.div>
+      {!filteredProductions && <PageLoading />}
+      <div className="grid grid-cols-3 justify-between gap-5">
+        {filteredProductions &&
+          user &&
+          user.email == "baopowerpoint@gmail.com" &&
+          filteredProductions.slice(0, 9).map((document, idx) => (
+            <motion.div
+              variants={imageMotion((idx + 12) * 0.1, 0.5, "linear")}
+              initial="hidden"
+              animate="visible"
+              key={document.id}
+              className="w-fit h-fit shadow-sm"
+            >
+              <img
+                src={document.imgUrls[0]}
+                alt=""
+                className="w-[200px] h-[200px] object-cover "
+              />
+              <div className="text-center m-5">
+                <p className="text-body2">{document.title}</p>
+                <p className="font-500 text-body1 ">{document.price}</p>
+              </div>
+            </motion.div>
+          ))}
       </div>
+      <Link to="products">
+        <motion.button
+          variants={textMotion(2.1, 2, "linear")}
+          initial="hidden"
+          animate="visible"
+          to="products"
+          className="bg-dark text-light font-400 px-5 py-1 rounded-sm block mx-auto my-5"
+        >
+          Xem Tất Cả
+        </motion.button>
+      </Link>
+      <motion.p
+        variants={textMotion(1.1, 2, "linear")}
+        initial="hidden"
+        animate="visible"
+        className="text-center"
+      >
+        Đang trong giai đoạn hoàn thiện danh sách sản phẩm
+      </motion.p>
     </div>
   );
 };

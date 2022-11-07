@@ -1,9 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
+import { useMotion } from "../motion/useMotion";
 const CourseIntroduction = () => {
+  const { textMotion } = useMotion();
   return (
-    <div className="mt-20">
+    <motion.div
+      variants={textMotion(2.3, 1.5, "linear")}
+      initial="hidden"
+      animate="visible"
+      className="mt-5"
+    >
       <p className="text-center uppercase text-headline4 mt-10 my-5">
         Khoá học
       </p>
@@ -15,7 +22,7 @@ const CourseIntroduction = () => {
           Tìm hiểu thêm
         </button>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 

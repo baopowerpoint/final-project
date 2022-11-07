@@ -22,10 +22,10 @@ const SelectBar = () => {
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
           aria-label="Default select example"
         >
-          <option value="1">Các sản phẩm nổi bật</option>
-          <option value="2">Đính kết</option>
-          <option value="2">Hoa vải</option>
-          <option value="2">Đồ da</option>
+          <option value="">Các sản phẩm nổi bật</option>
+          <option value="dinhket">Đính kết</option>
+          <option value="hoavai">Hoa vải</option>
+          <option value="doda">Đồ da</option>
         </select>
       </div>
     </div>

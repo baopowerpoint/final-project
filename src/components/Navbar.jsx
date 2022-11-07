@@ -43,16 +43,13 @@ const Navbar = () => {
           className="collapse navbar-collapse flex-grow items-center"
           id="navbarSupportedContent1"
         >
-          <Link
-            to="/"
-            className="text-xl text-white pr-2 font-sans font-semibold"
-          >
+          <Link to="/" className="text-xl text-white pr-2 font-sans font-600">
             MINH HIEN
           </Link>
 
           <ul className="navbar-nav flex flex-col pl-0  mr-auto">
             <li className="nav-item p-2">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link  " to="/">
                 Trang chủ
               </Link>
             </li>
@@ -81,14 +78,26 @@ const Navbar = () => {
                 Về chúng tôi
               </Link>
             </li>
-            <li className="nav-item p-2">
-              <Link
-                to="admin"
-                className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
-              >
-                Admin
-              </Link>
-            </li>
+            {user && user.email === "baopowerpoint@gmail.com" && (
+              <li className="nav-item p-2">
+                <Link
+                  to="admin"
+                  className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                >
+                  Admin
+                </Link>
+              </li>
+            )}
+            {user && user.email === "baopowerpoint@gmail.com" && (
+              <li className="nav-item p-2">
+                <Link
+                  to="product-managing"
+                  className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                >
+                  Quản lý sản phẩm
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
         {!user && (
@@ -104,13 +113,23 @@ const Navbar = () => {
         {user && (
           <div className="flex  items-center relative">
             <div className="dropdown relative">
-              <Gravatar
-                email={user.email}
-                className="rounded-full w-[25px] h-[25px] mx-2 cursor-pointer"
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              />
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                  className="rounded-full w-[25px] h-[25px] mx-2 cursor-pointer"
+                />
+              ) : (
+                <Gravatar
+                  email={user.email}
+                  className="rounded-full w-[25px] h-[25px] mx-2 cursor-pointer"
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
+                />
+              )}
 
               <ul
                 className={`absolute ${
@@ -135,17 +154,19 @@ const Navbar = () => {
                     Khoá học của tôi
                   </Link>
                 </li>
+                {user && (
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="  text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-600   "
+                    >
+                      {isPending ? <Loading /> : "Đăng xuất"}
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
-        )}
-        {user && (
-          <button
-            onClick={handleLogout}
-            className="bg-red text-light font-500 px-4 py-1  rounded-lg"
-          >
-            {isPending ? <Loading /> : "Đăng xuất"}
-          </button>
         )}
       </div>
     </nav>

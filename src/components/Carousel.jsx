@@ -1,10 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 const Carousel = () => {
   return (
     <>
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, type: "linear", duration: 2 }}
         id="carouselDarkVariant"
         className="carousel slide carousel-fade carousel-dark  relative"
         data-bs-ride="carousel"
@@ -29,28 +32,28 @@ const Carousel = () => {
           ></button>
         </div>
 
-        <div className="carousel-inner relative w-full overflow-hidden">
+        <div className="carousel-inner relative w-full ">
           <div className="carousel-item active relative float-left w-full">
             <img
-              src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/272443168_3066786800230880_4768292249261769721_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=0debeb&_nc_ohc=r9nucsrbaKMAX-o1yDY&_nc_ht=scontent.fhan2-3.fna&oh=00_AT8BQ30F2S2ERoh8Nmf3L40TSJ4RQ06eVgswwvpPxSlWCw&oe=62AA3A73"
-              className="block w-full h-96 object-cover object-center"
-              alt="Motorbike Smoke"
-            />
-          </div>
-
-          <div className="carousel-item relative float-left w-full">
-            <img
-              src="https://scontent.fhan2-2.fna.fbcdn.net/v/t39.30808-6/272152197_3064681180441442_7853510780194952066_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=0debeb&_nc_ohc=kqOxrDC9LzkAX_TrSl0&_nc_ht=scontent.fhan2-2.fna&oh=00_AT9-hKO2eUyR9DmslCnljYfgO0qTtEI_VCk329UCER9yEA&oe=62AB103D"
+              src="https://firebasestorage.googleapis.com/v0/b/minh-hien-web.appspot.com/o/production%20Collection%2F62928eb18bff4fa116ee.jpg?alt=media&token=45c61412-34a0-4972-9f51-3e86be6c092b"
               className="block w-full h-96 object-cover"
-              alt="Mountaintop"
+              alt="Product"
+            />
+          </div>
+
+          <div className="carousel-item relative float-left w-full ">
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/minh-hien-web.appspot.com/o/production%20Collection%2F3cb77014805b44051d4a%20(1).jpg?alt=media&token=3d37c69c-e5f0-4af4-b6cc-593088f57cb6"
+              className="block w-full h-96 object-cover"
+              alt="Product"
             />
           </div>
 
           <div className="carousel-item relative float-left w-full">
             <img
-              src="https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/272159186_3066060800303480_7406043557994079953_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0debeb&_nc_ohc=yWOSw3XBn-sAX8oZSZJ&_nc_ht=scontent.fhan2-3.fna&oh=00_AT-7IZUf3r72U0aaZDp4LPpOw88hO3wBMlYNVlhAJuHIGw&oe=62A9E7AE"
+              src="https://firebasestorage.googleapis.com/v0/b/minh-hien-web.appspot.com/o/production%20Collection%2Fc9da77abbee47aba23f5%20(1).jpg?alt=media&token=887a3e93-2209-4e00-b728-9a661c60a58e"
               className="block w-full  h-96 object-cover"
-              alt="Woman Reading a Book"
+              alt="Product"
             />
           </div>
         </div>
@@ -79,15 +82,7 @@ const Carousel = () => {
           ></span>
           <span className="visually-hidden">Next</span>
         </button>
-      </div>
-      <Link to="products">
-        <button
-          to="products"
-          className="bg-dark text-light font-400 px-5 py-1 rounded-sm block mx-auto my-5"
-        >
-          Xem Sản Phẩm
-        </button>
-      </Link>
+      </motion.div>
     </>
   );
 };

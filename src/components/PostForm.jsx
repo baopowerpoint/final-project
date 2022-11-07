@@ -10,94 +10,109 @@ const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState("");
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [fileError, setFileError] = useState(null);
   const [category, setCategory] = useState("");
 
-  const [imgUrl, setImgUrl] = useState(null);
-  const [angles, setAngles] = useState([]);
+  const [imgUrls, setImgUrls] = useState([]);
+
   const [progress, setProgress] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  useEffect(() => {
-    console.log(angles);
-  }, [angles]);
+
   useEffect(() => {
     setFileError(null);
-    if (file) {
-      if (file.size > 20000000) {
-        setFileError("Kích thước ảnh quá lớn");
-        return;
+    files.map((file) => {
+      if (file) {
+        if (file.size > 20000000) {
+          setFileError("Kích thước ảnh quá lớn");
+          return;
+        }
+        if (!file.type.includes("image")) {
+          setFileError("Vui lòng xem lại định dạng");
+          return;
+        }
       }
-      if (!file.type.includes("image")) {
-        setFileError("Vui lòng xem lại định dạng");
-        return;
-      }
+    });
+  }, [files]);
+  async function addDocument(id) {
+    if (imgUrls) {
+      await addDoc(collection(db, "posts"), {
+        title,
+        content,
+        category,
+        price,
+        imgUrls,
+        id,
+      });
+    } else {
+      return;
     }
-  }, [file]);
+  }
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImg = e.target.files[i];
+
       newImg["id"] = Math.random();
-      setAngles((prevState) => [...prevState, newImg]);
+
+      setFiles((prevState) => [...prevState, newImg]);
     }
-    console.log(angles);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const promises = [];
+    files.map((file) => {
+      const storageRef = ref(
+        storage,
+        `products/${category}/${file.name + file.size}`
+      );
 
-    const storageRef = ref(
-      storage,
-      `products/${category}/${file.name + file.size}`
-    );
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      promises.push(uploadTask);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const prog = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(prog);
+        },
+        (error) => {
+          console.log(error);
+        },
+        async () => {
+          const res = await getDownloadURL(uploadTask.snapshot.ref);
+          setImgUrls((prevState) => [...prevState, res]);
+        }
+      );
+    });
+    console.log(imgUrls);
+    console.log(files);
+    Promise.all(promises)
+      .then(() => {
+        alert("Tải lên thành công");
+      })
+      .catch((err) => console.log(err));
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => {
-        console.log(error);
-      },
-      async () => {
-        await getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setImgUrl((prevState) => [...prevState, url]);
-        });
-      }
-    );
     if (progress === 100) {
       setTitle("");
       setContent("");
       setPrice("");
       setCategory(null);
-      setAngles(null);
-      setFile(null);
     }
   };
-  useEffect(() => {
-    function addDocument() {
-      if (imgUrl) {
-        addDoc(collection(db, "posts"), {
-          title,
-          content,
-          category,
-          price,
-          angles,
-          imgUrl,
-        });
-      } else {
-        return;
-      }
-    }
-    addDocument();
-  }, [imgUrl]);
+
   if (progress === 100) {
     setProgress(null);
   }
 
+  useEffect(() => {
+    if (imgUrls.length === files.length && imgUrls.length > 0) {
+      addDocument(Math.random());
+      setImgUrls([]);
+      setFiles([]);
+    }
+  }, [imgUrls]);
   return (
     <div className="block p-6 rounded-lg shadow-lg mx-auto bg-white max-w-md">
       <form onSubmit={handleSubmit}>
@@ -151,8 +166,10 @@ const PostForm = () => {
           >
             <option>Chọn mục</option>
             <option value="dinhket">Đính kết</option>
-            <option value="doda">Huy hiệu</option>
-            <option value="hoavai">Hoa lụa</option>
+            <option value="doda">Đồ da</option>
+            <option value="huyhieu">Huy hiệu</option>
+            <option value="hoavai">Hoa vải</option>
+            <option value="resindohat">Resin, Đổ hạt</option>
           </select>
           {!category && <p className="text-red">Vui lòng chọn một mục</p>}
         </div>
@@ -165,26 +182,10 @@ const PostForm = () => {
             className="  block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             type="file"
             id="formFile"
-            onChange={(e) => {
-              setFile(e.target.files[0]);
-            }}
-          />
-          {!file && <p className="text-red">Vui lòng chọn ảnh</p>}
-          {fileError && <p className="text-red ">{fileError}</p>}
-        </div>
-        <div className="mb-3 w-96">
-          <label className="form-label inline-block mb-2 text-gray-700">
-            Chọn các góc khác
-          </label>
-          <input
-            defaultValue={null}
-            className="  block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-            type="file"
-            id="formFile"
             multiple
             onChange={handleChange}
           />
-          {!file && <p className="text-red">Vui lòng chọn ảnh</p>}
+          {!files && <p className="text-red">Vui lòng chọn ảnh</p>}
           {fileError && <p className="text-red ">{fileError}</p>}
         </div>
 
@@ -197,7 +198,7 @@ const PostForm = () => {
             !title ||
             !content ||
             !price ||
-            !file ||
+            !files ||
             !category
           }
           className=" w-full px-6 py-2.5 bg-blue text-light font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"

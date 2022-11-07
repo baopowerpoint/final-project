@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    console.log("out of scopte!");
+    console.log("out of scope!");
   }
   return context;
 };

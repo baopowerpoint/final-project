@@ -2,11 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import Loading from "../components/Loading";
+import { useFacebookLogin } from "../hooks/useFacebookLogin";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const { login, isPending, error } = useLogin();
+  const { facebookLogin } = useFacebookLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +16,9 @@ const Login = () => {
   };
   return (
     <div className="block mx-auto mt-20 p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      <h1 className="mb-5 font-700 text-headline6 text-dark2">
+        Đăng nhập với tài khoản
+      </h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-6">
           <label className="form-label inline-block mb-2 text-gray-700">
@@ -30,7 +35,7 @@ const Login = () => {
         font-normal
         text-gray-700
         bg-white bg-clip-padding
-        border border-solid border-gray-300
+        border border-solid border-light3
         rounded
         transition
         ease-in-out
@@ -56,7 +61,7 @@ const Login = () => {
         font-normal
         text-gray-700
         bg-white bg-clip-padding
-        border border-solid border-gray-300
+        border border-solid border-light3
         rounded
         transition
         ease-in-out
@@ -68,7 +73,7 @@ const Login = () => {
             placeholder="Mật khẩu"
           />
         </div>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center ">
           <div className="form-group form-check">
             <input
               type="checkbox"
@@ -79,13 +84,21 @@ const Login = () => {
             </label>
           </div>
         </div>
+        {error && (
+          <p className="text-red my-1">
+            Tên đăng nhập hoặc mật khẩu không chính xác
+          </p>
+        )}
+
         {!isPending && (
           <button
+            disabled={!email || !password}
             type="submit"
             className="
       w-full
       px-6
       py-2.5
+      mt-2
       bg-blue
       text-light
       font-medium
@@ -131,6 +144,12 @@ const Login = () => {
           </button>
         )}
       </form>
+      <div className="mt-5">
+        <p className="inline-block">Hoặc đăng nhập với</p>
+        <button onClick={facebookLogin} className="text-blue font-500 pl-1">
+          Facebook
+        </button>
+      </div>
     </div>
   );
 };

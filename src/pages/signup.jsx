@@ -1,17 +1,19 @@
+import { errorPrefix } from "@firebase/util";
 import React from "react";
 import { useState } from "react";
 import Loading from "../components/Loading";
 import { useSignup } from "../hooks/useSignup";
 const Signup = () => {
-  const [lastName, setLastName] = useState("");
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const { signup, isPending, error } = useSignup();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password, name);
+    signup(email, password, userName, fullName, phoneNumber);
   };
   return (
     <div className="block p-6 rounded-lg shadow-lg mx-auto bg-white max-w-md">
@@ -28,13 +30,13 @@ const Signup = () => {
             text-base
             font-normal
             bg-white bg-clip-padding
-            border border-solid border-med
+            border border-solid border-light3
             rounded
             m-0
             focus:outline-none"
-              placeholder="Họ"
+              placeholder="Tên đầy đủ"
               onChange={(e) => {
-                setLastName(e.target.value);
+                setFullName(e.target.value);
               }}
             />
           </div>
@@ -49,13 +51,13 @@ const Signup = () => {
             text-base
             font-normal
             bg-white bg-clip-padding
-            border border-solid border-med
+            border border-solid border-light3
             rounded
             m-0
             focus:outline-none"
-              placeholder="Tên"
+              placeholder="Username"
               onChange={(e) => {
-                setName(e.target.value);
+                setUserName(e.target.value);
               }}
             />
           </div>
@@ -68,13 +70,31 @@ const Signup = () => {
           px-3
           py-1.5
           bg-white bg-clip-padding
-          border border-solid border-med
+          border border-solid border-light3
           rounded
           m-0
           focus:outline-none"
             placeholder="Email address"
             onChange={(e) => {
               setEmail(e.target.value);
+            }}
+          />
+        </div>
+        <div className="form-group mb-6">
+          <input
+            type="text"
+            className="form-control block
+          w-full
+          px-3
+          py-1.5
+          bg-white bg-clip-padding
+          border border-solid border-light3
+          rounded
+          m-0
+          focus:outline-none"
+            placeholder="SĐT"
+            onChange={(e) => {
+              setPhoneNumber(e.target.value);
             }}
           />
         </div>
@@ -87,18 +107,19 @@ const Signup = () => {
           py-1.5
          
           bg-white bg-clip-padding
-          border border-solid border-med
+          border border-solid border-light3
           rounded
           
           m-0
            focus:outline-none"
             placeholder="Password"
+            autoComplete="on"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
         </div>
-
+        {error && <p>{error.message}</p>}
         {!isPending && (
           <button
             type="submit"

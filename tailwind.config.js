@@ -44,6 +44,13 @@ module.exports = {
       btn: "14px",
       caption: "12px",
     },
+    gridTemplateRows: {
+      // Simple 8 row grid
+      8: "300px 300px 300px 300px",
+
+      // Complex site-specific row configuration
+      layout: "50px 50px 1fr",
+    },
     backgroundImage: {
       "hero-pattern": "url('/src/imgs/img.jpg')",
     },
