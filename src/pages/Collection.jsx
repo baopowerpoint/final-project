@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Loading from "../components/Loading";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
-import MyImage from "../components/MyImage";
+
 function Collection() {
   const { documents: post, error, isPending } = useCollection("posts");
   const [filteredProducts, setFilteredProducts] = useState(null);
