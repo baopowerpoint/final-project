@@ -3,15 +3,12 @@ import { useCollection } from "../hooks/useCollection";
 import PageLoading from "./PageLoading";
 import { motion } from "framer-motion";
 import { useMotion } from "../motion/useMotion";
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 const Productions = () => {
   const { documents } = useCollection("posts");
   const [filteredProductions, setFilteredProductions] = useState(null);
   const [category, setCategory] = useState("");
   const { textMotion, imageMotion } = useMotion();
-  const { user } = useAuthContext();
 
   useEffect(() => {
     if (documents) {
@@ -75,54 +72,46 @@ const Productions = () => {
             <option value="hoavai">Hoa vải</option>
             <option value="doda">Đồ da</option>
             <option value="huyhieu">Huy hiệu</option>
-            <option value="resindohat">Resin, đổ hạt</option>
+            {/* <option value="resindohat">Resin, đổ hạt</option> */}
           </select>
         </div>
       </motion.div>
       {!filteredProductions && <PageLoading />}
       <div className="grid grid-cols-3 justify-between gap-5">
         {filteredProductions &&
-          user &&
-          user.email == "baopowerpoint@gmail.com" &&
-          filteredProductions.slice(0, 9).map((document, idx) => (
-            <motion.div
-              variants={imageMotion((idx + 12) * 0.1, 0.5, "linear")}
-              initial="hidden"
-              animate="visible"
-              key={document.id}
-              className="w-fit h-fit shadow-sm"
-            >
-              <img
-                src={document.imgUrls[0]}
-                alt=""
-                className="w-[200px] h-[200px] object-cover "
-              />
-              <div className="text-center m-5">
-                <p className="text-body2">{document.title}</p>
-                <p className="font-500 text-body1 ">{document.price}</p>
-              </div>
-            </motion.div>
-          ))}
+          filteredProductions
+            .filter((product) => product.category !== "doda")
+            .slice(0, 9)
+            .map(
+              (
+                document,
+                idx //tạm thời , sau bỏ filter
+              ) => (
+                <motion.div
+                  variants={imageMotion((idx + 12) * 0.1, 0.5, "linear")}
+                  initial="hidden"
+                  animate="visible"
+                  key={document.id}
+                  className="w-fit h-fit shadow-sm"
+                >
+                  <img
+                    src={document.imgUrls[0]}
+                    alt=""
+                    className="w-[200px] h-[200px] object-cover "
+                  />
+                  <div className="text-center m-5">
+                    <p className="text-body2">{document.title}</p>
+                    <p className="font-500 text-body1 ">
+                      {document.price
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+                      VNĐ
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            )}
       </div>
-      <Link to="products">
-        <motion.button
-          variants={textMotion(2.1, 2, "linear")}
-          initial="hidden"
-          animate="visible"
-          to="products"
-          className="bg-dark text-light font-400 px-5 py-1 rounded-sm block mx-auto my-5"
-        >
-          Xem Tất Cả
-        </motion.button>
-      </Link>
-      <motion.p
-        variants={textMotion(1.1, 2, "linear")}
-        initial="hidden"
-        animate="visible"
-        className="text-center"
-      >
-        Đang trong giai đoạn hoàn thiện danh sách sản phẩm
-      </motion.p>
     </div>
   );
 };

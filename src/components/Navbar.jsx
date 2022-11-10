@@ -8,6 +8,7 @@ const Navbar = () => {
   const { logout, isPending, error } = useLogout();
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuthContext();
+  const [currentPage, setCurrentPage] = useState(null);
   const handleLogout = () => {
     logout();
   };
@@ -15,7 +16,7 @@ const Navbar = () => {
     <nav className="relative w-full flex flex-wrap items-center  justify-between py-3 bg-gray-900 text-gray-200 shadow-lg navbar navbar-expand-lg navbar-light">
       <div className="container-fluid w-full flex flex-wrap items-center justify-between px-5">
         <button
-          className="navbar-toggler text-gray-200 border-0 hover:shadow-none hover:no-underline py-2  bg-transparent focus:outline-none focus:ring-0 focus:shadow-none focus:no-underline"
+          className="navbar-toggler text-gray-200 border-0 hover:shadow-none hover:no-font-700 py-2  bg-transparent focus:outline-none focus:ring-0 focus:shadow-none focus:no-font-700"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent1"
@@ -43,46 +44,80 @@ const Navbar = () => {
           className="collapse navbar-collapse flex-grow items-center"
           id="navbarSupportedContent1"
         >
-          <Link to="/" className="text-xl text-white pr-2 font-sans font-600">
+          <Link
+            onClick={() => {
+              setCurrentPage("home");
+            }}
+            to="/"
+            className={`text-xl  text-white pr-2 font-sans font-700`}
+          >
             MINH HIEN
           </Link>
 
           <ul className="navbar-nav flex flex-col pl-0  mr-auto">
             <li className="nav-item p-2">
-              <Link className="nav-link  " to="/">
+              <Link
+                onClick={() => {
+                  setCurrentPage("home");
+                }}
+                className={`text-xl ${
+                  currentPage == "home" ? "font-700" : ""
+                } text-white pr-2 font-sans `}
+                to="/"
+              >
                 Trang chủ
               </Link>
             </li>
             <li className="nav-item p-2">
               <Link
+                onClick={() => {
+                  setCurrentPage("products");
+                }}
                 to="products"
-                className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                className={`text-xl ${
+                  currentPage == "products" ? "font-700" : ""
+                } text-white pr-2 font-sans `}
               >
                 Sản phẩm
               </Link>
             </li>
-            <li className="nav-item p-2">
+            <li className="nav-item p-2 ">
               <Link
+                onClick={() => {
+                  setCurrentPage("course");
+                }}
                 to="course"
-                className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                className={`text-xl ${
+                  currentPage == "course" ? "font-700" : ""
+                } text-white pr-2 font-sans `}
                 href="#"
               >
                 Khoá học
               </Link>
             </li>
-            <li className="nav-item p-2">
+            <li className="nav-item p-2 ">
               <Link
+                onClick={() => {
+                  setCurrentPage("about");
+                }}
                 to="about"
-                className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                className={`text-xl ${
+                  currentPage == "about" ? "font-700" : ""
+                } text-white pr-2 font-sans `}
               >
                 Về chúng tôi
               </Link>
             </li>
             {user && user.email === "baopowerpoint@gmail.com" && (
-              <li className="nav-item p-2">
+              <li className="nav-item p-2 ">
                 <Link
+                  onClick={() => {
+                    setCurrentPage("admin");
+                  }}
                   to="admin"
-                  className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                  className={`text-xl ${
+                    currentPage == "admin" ? "font-700" : ""
+                  } text-white pr-2 font-sans `}
                 >
                   Admin
                 </Link>
@@ -91,8 +126,13 @@ const Navbar = () => {
             {user && user.email === "baopowerpoint@gmail.com" && (
               <li className="nav-item p-2">
                 <Link
+                  onClick={() => {
+                    setCurrentPage("manage");
+                  }}
                   to="product-managing"
-                  className="nav-link text-white  hover:opacity-80 focus:opacity-80 p-0"
+                  className={`text-xl ${
+                    currentPage == "manage" ? "font-700" : ""
+                  } text-white pr-2 font-sans `}
                 >
                   Quản lý sản phẩm
                 </Link>
@@ -103,7 +143,7 @@ const Navbar = () => {
         {!user && (
           <div>
             <Link to="login">
-              <button className="bg-blue text-light font-600 px-5 py-1 rounded-lg">
+              <button className="bg-blue text-light font-700 px-5 py-1 rounded-lg">
                 Đăng Nhập
               </button>
             </Link>
@@ -140,7 +180,7 @@ const Navbar = () => {
                   <Link
                     onClick={() => setIsOpen(false)}
                     to="profile"
-                    className="d text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-600"
+                    className="d text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-700"
                   >
                     Hồ sơ
                   </Link>
@@ -149,7 +189,7 @@ const Navbar = () => {
                   <Link
                     onClick={() => setIsOpen(false)}
                     to="course"
-                    className="d text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-600"
+                    className="d text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-700"
                   >
                     Khoá học của tôi
                   </Link>
@@ -158,7 +198,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="  text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-600   "
+                      className="  text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-dark font-500 hover:font-700   "
                     >
                       {isPending ? <Loading /> : "Đăng xuất"}
                     </button>
