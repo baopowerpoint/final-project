@@ -24,9 +24,12 @@ function Collection() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   useEffect(() => {
     if (post) {
-      console.log(name, priceLevel);
       if (!name && !priceLevel) {
         setFilteredProducts(
           post.filter((product) => product.category !== "doda") //tạm thời, sau bỏ filter

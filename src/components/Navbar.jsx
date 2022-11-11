@@ -95,7 +95,7 @@ const Navbar = () => {
                 Khoá học
               </Link>
             </li>
-            <li className="nav-item p-2 ">
+            {/* <li className="nav-item p-2 ">
               <Link
                 onClick={() => {
                   setCurrentPage("about");
@@ -107,7 +107,7 @@ const Navbar = () => {
               >
                 Về chúng tôi
               </Link>
-            </li>
+            </li> */}
             {user && user.email === "baopowerpoint@gmail.com" && (
               <li className="nav-item p-2 ">
                 <Link
