@@ -120,7 +120,7 @@ const UserTable = () => {
 
                       <td className="text-sm text-dark2 font-light px-6 py-4 whitespace-nowrap">
                         <button>
-                          {user.isPurchased ? "10/10/2010" : "Chưa thanh toán"}
+                          {user.isPurchased ? "02/12/2022" : "Chưa thanh toán"}
                         </button>
                       </td>
 

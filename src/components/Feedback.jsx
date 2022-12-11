@@ -10,7 +10,7 @@ const Feedback = () => {
       animate="visible"
       className="mt-20"
     >
-      <p className="text-headline4 text-center">Feedback</p>
+      <p className="text-headline4 font-600 text-center">Feedback</p>
       <div
         id="carouselExampleCaptions"
         className="carousel slide relative carousel-dark"

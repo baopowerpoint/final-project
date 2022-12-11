@@ -8,11 +8,11 @@ const CourseHeader = ({ isPurchased }) => {
       variants={textMotion(0.5, 1.5, "linear")}
       initial="hidden"
       animate="visible"
-      className="p-12 h-[400px] text-center relative overflow-hidden bg-no-repeat bg-hero-pattern bg-cover rounded-lg"
+      className="p-12 h-[370px] text-center relative overflow-hidden bg-no-repeat bg-hero-pattern bg-cover rounded-lg"
     >
       <div
         className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
       >
         <div className="flex justify-center items-center h-full">
           <div className="text-light">

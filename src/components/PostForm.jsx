@@ -13,9 +13,9 @@ const PostForm = () => {
   const [files, setFiles] = useState([]);
   const [fileError, setFileError] = useState(null);
   const [category, setCategory] = useState("");
-
+  const [order, setOrder] = useState(null);
   const [imgUrls, setImgUrls] = useState([]);
-
+  const [isSet, setIsSet] = useState(false);
   const [progress, setProgress] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
@@ -36,6 +36,7 @@ const PostForm = () => {
   }, [files]);
   async function addDocument(id) {
     if (imgUrls) {
+      const date = new Date().getTime();
       await addDoc(collection(db, "posts"), {
         title,
         content,
@@ -43,6 +44,8 @@ const PostForm = () => {
         price,
         imgUrls,
         id,
+        order,
+        time: date,
       });
     } else {
       return;
@@ -154,6 +157,18 @@ const PostForm = () => {
           />
           {!price && <p className="text-red"> vui lòng điền giá</p>}
         </div>
+        <div className="form-group mb-6">
+          <input
+            defaultValue=""
+            type="number"
+            className="  block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-med rounded transition ease-in-out m-0 "
+            placeholder="Stt"
+            onChange={(e) => {
+              setOrder(e.target.value);
+            }}
+          />
+          {!order && <p className="text-red"> vui lòng điền Stt</p>}
+        </div>
 
         <div className="mb-3 xl:w-96">
           <select
@@ -170,6 +185,7 @@ const PostForm = () => {
             <option value="huyhieu">Huy hiệu</option>
             <option value="hoavai">Hoa vải</option>
             <option value="resindohat">Resin, Đổ hạt</option>
+            <option value="hoatai">Hoa tai</option>
           </select>
           {!category && <p className="text-red">Vui lòng chọn một mục</p>}
         </div>

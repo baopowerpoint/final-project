@@ -11,10 +11,10 @@ const CourseIntroduction = () => {
       animate="visible"
       className="mt-5"
     >
-      <p className="text-center uppercase text-headline4 mt-10 my-5">
+      <p className="text-center uppercase text-headline4 font-600 mt-10 ">
         Khoá học
       </p>
-      <p className="text-center  text-body2 my-5">
+      <p className="text-center  text-body2 ">
         Tham gia khoá học thiết kế, tạo ra những sản phẩm đính kết
       </p>
       <Link to="course">

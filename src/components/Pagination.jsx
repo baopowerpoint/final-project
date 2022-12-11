@@ -13,7 +13,7 @@ function Pagination({
   onPageChange,
   currentPage,
 }) {
-  const pageSize = 12;
+  const pageSize = 20;
   const { imageMotion } = useMotion();
   const pagesCount = itemsCount / pageSize;
   const startIndex = (currentPage - 1) * pageSize;
@@ -23,7 +23,7 @@ function Pagination({
 
   return (
     <div>
-      <div className="grid grid-cols-2 lg:grid-cols-3  gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-5">
         {items &&
           products.map((post, idx) => (
             <Link
@@ -35,24 +35,30 @@ function Pagination({
                 variants={imageMotion((idx + 12) * 0.1, 0.5, "linear")}
                 initial="hidden"
                 animate="visible"
-                className="w-full h-full shadow-sm"
+                className="w-full h-full shadow-sm max-w-[200px]"
               >
                 <LazyLoad offsetBottom={200}>
                   <img
                     src={post.imgUrls[0]}
                     alt=""
-                    className="w-[170px] lg:w-[200px] lg:h-[200px] h-[170px] object-cover "
+                    className="w-full h-[170px] object-cover "
                   />
                 </LazyLoad>
 
                 {/* <MyImage height={200} width={200} src={post.imgUrls[0]} /> */}
-                <div className="text-center m-5">
-                  <p className="text-body2">{post.title}</p>
-                  <p className="font-500 text-body1 ">
+                <div className="text-left my-5 mx-1">
+                  <p className="text-body2 font-600">{post.title}</p>
+                  <p className="font-500 text-body2 text-red">
+                    {post.wholeSale &&
+                      post.wholeSale
+                        .substring(0, post.wholeSale.indexOf("-"))
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VNĐ -"}{" "}
                     {post.price
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
                     VNĐ
+                    {`${post.isSet ? "/ 1 set" : "/ SP"}`}
                   </p>
                 </div>
               </motion.div>
@@ -80,7 +86,7 @@ function Pagination({
             }}
             className="py-2 px-4 text-sm font-700 text-light bg-dark rounded-l "
           >
-            Prev
+            Trang trước
           </button>
           <button
             onClick={() => {
@@ -89,7 +95,7 @@ function Pagination({
             disabled={items.length - offset < pageSize}
             className="py-2 px-4 text-sm font-700 text-light bg-dark rounded-r border-0 border-l border-dark "
           >
-            Next
+            Trang sau
           </button>
         </div>
       </div>

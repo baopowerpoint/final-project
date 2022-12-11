@@ -1,9 +1,11 @@
 import React from "react";
 import Footer from "../components/Footer";
-import Carousel from "../components/Carousel";
+// import Carousel from "../components/Carousel";
 import CourseIntroduction from "../components/CourseIntroduction";
 import Feedback from "../components/Feedback";
 import Productions from "../components/Productions";
+import ReactPlayer from "react-player";
+import { motion } from "framer-motion";
 
 //check ip
 import axios from "axios";
@@ -15,12 +17,14 @@ import { db } from "../firebase/firebaseConfig";
 
 const Home = () => {
   const [ip, setIp] = useState(null);
+  const [volume, setVolume] = useState(0);
   const { documents: users } = useCollection("users");
   const { user } = useAuthContext();
   const getData = async () => {
     const res = await axios.get("https://geolocation-db.com/json/");
     setIp(res.data.IPv4);
   };
+
   useEffect(() => {
     const checkIp = async () => {
       await getData();
@@ -67,9 +71,27 @@ const Home = () => {
   return (
     <div>
       <div className="px-5 mx-auto my-5 max-w-[800px] ">
-        <div className="max-w-[500px] mx-auto">
+        {/* <div className="max-w-[500px] mx-auto">
           <Carousel />
-        </div>
+        </div> */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, type: "linear", duration: 2 }}
+          className="player-wrapper w-full"
+        >
+          <ReactPlayer
+            loop={true}
+            url="https://firebasestorage.googleapis.com/v0/b/minh-hien-web.appspot.com/o/Video_Introduction%2F90279E2E-D8F7-4E6D-AB4D-4A02E93C.mp4?alt=media&token=2dbe5af8-fd9f-4e9e-9c4f-9a2bb75b282f"
+            className="react-player"
+            playing={true}
+            playsinline={true}
+            volume={volume}
+            width="100%"
+            height="100%"
+            controls
+          />
+        </motion.div>
         <Productions />
         <CourseIntroduction />
         <Feedback />

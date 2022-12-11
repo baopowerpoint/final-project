@@ -54,7 +54,7 @@ const Productions = () => {
         variants={textMotion(1.1, 2, "linear")}
         initial="hidden"
         animate="visible"
-        className="text-center uppercase text-headline4 mt-5 my-5"
+        className="text-center uppercase text-headline4 font-600 mt-5 "
       >
         Sản phẩm
       </motion.p>
@@ -62,7 +62,7 @@ const Productions = () => {
         variants={textMotion(1.3, 2, "linear")}
         initial="hidden"
         animate="visible"
-        className="text-center gap-5 my-5"
+        className="text-center gap-5 "
       >
         Tham khảo giá <span className="font-700">Bán Lẻ</span> các sản phẩm của
         Minh Hien Accessories tại đây:

@@ -6,7 +6,7 @@ import Loading from "../components/Loading";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useParams } from "react-router-dom";
 import { MdOutlineArrowDropDown } from "react-icons/md";
-
+import { AiFillStar } from "react-icons/ai";
 import Pagination from "../components/Pagination";
 
 function Collection() {
@@ -32,17 +32,63 @@ function Collection() {
     if (post) {
       if (!name && !priceLevel) {
         setFilteredProducts(
-          post.filter((product) => product.category !== "doda") //tạm thời, sau bỏ filter
+          post
+            .filter(
+              (product) =>
+                product.title == "3DDK148" ||
+                product.title == "2DDK86" ||
+                product.title == "2DDK90" ||
+                product.title == "3DDK171" ||
+                product.title == "3DDK173" ||
+                product.title == "3DDK174" ||
+                product.title == "2DDK7" ||
+                product.title == "3DDK118" ||
+                product.title == "3DDK120" ||
+                product.title == "3DDK121" ||
+                product.title == "3DDK122" ||
+                product.title == "2DDK35" ||
+                product.title == "2DDK37" ||
+                product.title == "3DDK128" ||
+                product.title == "3DDK130" ||
+                product.title == "2DDK43" ||
+                product.title == "2DDK40" ||
+                product.title == "2DDK41" ||
+                product.title == "3DDK131" ||
+                product.title == "3DDK132" ||
+                product.title == "3DDK133" ||
+                product.title == "3DDK134" ||
+                product.title == "3DDK135" ||
+                product.title == "3DDK136" ||
+                product.title == "3DDK137" ||
+                product.title == "2DDK47" ||
+                product.title == "2DDK48" ||
+                product.title == "2DDK50" ||
+                product.title == "2DDK52" ||
+                product.title == "3DDK138" ||
+                product.title == "3DDK140" ||
+                product.title == "2DDK53" ||
+                product.title == "3DDK141" ||
+                product.title == "2DDK54" ||
+                product.title == "3DDK143" ||
+                product.title == "3DDK144" ||
+                product.title == "3DDK146" ||
+                product.title == "3DDK147"
+            )
+            .sort((a, b) => a.OSO - b.OSO) //tạm thời, sau bỏ filter //tạm thời, sau bỏ filter
         );
       }
       if (name && !priceLevel) {
         if (name === "all") {
           setFilteredProducts(
-            post.filter((product) => product.category !== "doda")
+            post
+              .filter((product) => product.category !== "doda")
+              .sort((a, b) => b.time - a.time)
           ); //tạm thời, sau bỏ filter);
         } else {
           setFilteredProducts(
-            post.filter((product) => product.category === name)
+            post
+              .filter((product) => product.category === name)
+              .sort((a, b) => b.time - a.time)
           );
         }
       }
@@ -50,57 +96,69 @@ function Collection() {
         if (name == "all") {
           if (priceLevel == 450) {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  product.category !== "doda" //tạm thời, sau bỏ filter);
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    product.category !== "doda" //tạm thời, sau bỏ filter);
+                )
+                .sort((a, b) => b.time - a.time)
             );
           } else if (priceLevel == 950) {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  parseInt(product.price) >= 500000 &&
-                  product.category !== "doda" //tạm thời, sau bỏ filter);
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    parseInt(product.price) >= 500000 &&
+                    product.category !== "doda" //tạm thời, sau bỏ filter);
+                )
+                .sort((a, b) => b.time - a.time)
             );
           } else {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  parseInt(product.price) > 950000 &&
-                  product.category !== "doda" //tạm thời, sau bỏ filter);
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    parseInt(product.price) > 950000 &&
+                    product.category !== "doda" //tạm thời, sau bỏ filter);
+                )
+                .sort((a, b) => b.time - a.time)
             );
           }
         } else {
           if (priceLevel == 450) {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  product.category == name
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    product.category == name
+                )
+                .sort((a, b) => b.time - a.time)
             );
           } else if (priceLevel == 950) {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  parseInt(product.price) >= 500000 &&
-                  product.category == name
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    parseInt(product.price) >= 500000 &&
+                    product.category == name
+                )
+                .sort((a, b) => b.time - a.time)
             );
           } else {
             setFilteredProducts(
-              post.filter(
-                (product) =>
-                  parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
-                  parseInt(product.price) > 950000 &&
-                  product.category == name
-              )
+              post
+                .filter(
+                  (product) =>
+                    parseInt(product.price) <= parseInt(priceLevel) * 1000 &&
+                    parseInt(product.price) > 950000 &&
+                    product.category == name
+                )
+                .sort((a, b) => b.time - a.time)
             );
           }
         }
@@ -110,13 +168,20 @@ function Collection() {
 
   return (
     <div className="mx-5">
-      <div className="max-w-[800px] mx-auto text-center md:flex justify-between mt-10">
+      <div className="max-w-[1200px] mx-auto text-center md:flex md:justify-between mt-10">
         <div className="category  h-fit">
           <p className="text-headline6 font-500 ">Danh mục</p>
-          <ul className="mt-5 flex gap-4 md:flex-col justify-center sticky top-0 left-0">
-            <li>
+          <ul className="mt-5  flex flex-wrap gap-4 md:flex-col justify-center  text-left sticky top-0 left-0">
+            <li className={`${!name ? "font-600" : ""} `}>
+              <Link to="/products">
+                Nổi bật{" "}
+                <span>
+                  <AiFillStar className="inline text-[#E38B29]" />
+                </span>
+              </Link>{" "}
+            </li>
+            <li className={`${name == "all" ? "font-600" : ""} `}>
               <div className="relative z-50">
-                {" "}
                 <button
                   className="focus:bg-blue z-50 focus:px-2 focus:py-1/2 focus:text-light focus:rounded-lg"
                   onClick={() => {
@@ -124,7 +189,7 @@ function Collection() {
                     setIsDropped(true);
                   }}
                 >
-                  All
+                  Tất cả
                 </button>
                 {isDropped && category == "all" && (
                   <div className="absolute z-50 bg-[#ffffff] font-500 w-[100px] right-0 p-2">
@@ -177,9 +242,9 @@ function Collection() {
                               setIsDropped(false);
                             }
                           }}
-                          to="/products/all/1500"
+                          to="/products/all/2000"
                         >
-                          Từ 1000k -{">"} 1500k
+                          Từ 1000k -{">"} 2000k
                         </Link>
                       </li>
                     </ul>
@@ -203,7 +268,7 @@ function Collection() {
                 </div>
               )} */}
             </li>
-            <li>
+            <li className={`${name == "dinhket" ? "font-600" : ""} `}>
               <div className="relative ">
                 {" "}
                 <button
@@ -265,9 +330,9 @@ function Collection() {
                               setIsDropped(false);
                             }
                           }}
-                          to="/products/dinhket/1500"
+                          to="/products/dinhket/2000"
                         >
-                          Từ 1000k -{">"} 1500k
+                          Từ 1000k -{">"} 2000k
                         </Link>
                       </li>
                     </ul>
@@ -275,7 +340,7 @@ function Collection() {
                 )}
               </div>
             </li>
-            <li>
+            <li className={`${name == "hoavai" ? "font-600" : ""} `}>
               <div className="relative ">
                 {" "}
                 <button
@@ -337,9 +402,9 @@ function Collection() {
                               setIsDropped(false);
                             }
                           }}
-                          to="/products/hoavai/1500"
+                          to="/products/hoavai/2000"
                         >
-                          Từ 1000k -{">"} 1500k
+                          Từ 1000k -{">"} 2000k
                         </Link>
                       </li>
                     </ul>
@@ -347,7 +412,7 @@ function Collection() {
                 )}
               </div>
             </li>
-            <li>
+            <li className={`${name == "huyhieu" ? "font-600" : ""} `}>
               <div className="relative">
                 {" "}
                 <button
@@ -409,9 +474,81 @@ function Collection() {
                               setIsDropped(false);
                             }
                           }}
-                          to="/products/huyhieu/1500"
+                          to="/products/huyhieu/2000"
                         >
-                          Từ 1000k -{">"} 1500k
+                          Từ 1000k -{">"} 2000k
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </li>
+            <li className={`${name == "hoatai" ? "font-600" : ""} `}>
+              <div className="relative">
+                {" "}
+                <button
+                  className="focus:bg-blue z-50 focus:px-2 focus:py-1/2 focus:text-light focus:rounded-lg"
+                  onClick={() => {
+                    setCategory("hoatai");
+                    setIsDropped(true);
+                  }}
+                >
+                  Hoa tai
+                </button>
+                {isDropped && category == "hoatai" && (
+                  <div className="absolute z-50 bg-[#ffffff] font-500 w-[100px] right-0 p-2">
+                    <ul className="text-center">
+                      <li className="bg-light2 my-1 p-1 rounded-lg">
+                        <Link
+                          onClick={() => {
+                            setCurrentPage(1);
+                            if (isDropped) {
+                              setIsDropped(false);
+                            }
+                          }}
+                          to="/products/hoatai"
+                        >
+                          Tất cả{" "}
+                        </Link>
+                      </li>
+                      <li className="bg-light2 my-1 p-1 rounded-lg">
+                        <Link
+                          onClick={() => {
+                            setCurrentPage(1);
+                            if (isDropped) {
+                              setIsDropped(false);
+                            }
+                          }}
+                          to="/products/hoatai/450"
+                        >
+                          Từ 100k -{">"} 450k
+                        </Link>
+                      </li>
+                      <li className="bg-light2 my-1 p-1 rounded-lg">
+                        <Link
+                          onClick={() => {
+                            setCurrentPage(1);
+                            if (isDropped) {
+                              setIsDropped(false);
+                            }
+                          }}
+                          to="/products/hoatai/950"
+                        >
+                          Từ 500k -{">"} 950k
+                        </Link>
+                      </li>
+                      <li className="bg-light2 my-1 p-1 rounded-lg">
+                        <Link
+                          onClick={() => {
+                            setCurrentPage(1);
+                            if (isDropped) {
+                              setIsDropped(false);
+                            }
+                          }}
+                          to="/products/hoatai/2000"
+                        >
+                          Từ 1000k -{">"} 2000k
                         </Link>
                       </li>
                     </ul>
@@ -470,7 +607,8 @@ function Collection() {
             )}
           </ul> */}
         </div>
-        <div className="basis-9/12">
+        <div className="basis-10/12">
+          <h1 className="font-600 text-headline4">Danh sách sản phẩm</h1>
           {/* <img
             src="https://firebasestorage.googleapis.com/v0/b/minh-hien-web.appspot.com/o/production%20Collection%2Flogin%20background.jpg?alt=media&token=42df3223-029a-4c9d-8887-ab1086c21c7d"
             className="w-full h-[200px] object-cover object-top"
@@ -478,7 +616,7 @@ function Collection() {
           /> */}
           {filteredProducts && (
             <div className="flex justify-center items-center">
-              <p className="text-caption font-300 my-5">
+              <p className="text-caption font-300 my-1">
                 Tìm thấy {filteredProducts.length} kết quả
               </p>
             </div>

@@ -26,14 +26,11 @@ const CourseInfo = ({ isPurchased }) => {
           <p className=" text-headline5">Bùi Thị Minh Hiền</p>
         </div>
       </div>
-      <div className="flex mb-5 text-heading6 items-center justify-center gap-4">
-        <MdAccessTimeFilled />
-        <p> 2h30p</p>
-      </div>
+
       {isPurchased && (
         <div>
           <div
-            className=" rounded-lg bg-[#92e6a7] py-5 px-6 text-headline6 w-2/3 mx-auto text-[#1a7431] mb-3"
+            className=" rounded-lg bg-[#92e6a7] py-5 px-6 text-headline6 w-2/3 mx-auto text-[#1a7431] my-3"
             role="alert"
           >
             Bạn đã thanh toán khoá học !

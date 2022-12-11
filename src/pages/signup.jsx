@@ -100,7 +100,7 @@ const Signup = () => {
         </div>
         <div className="form-group mb-6">
           <input
-            type="password"
+            type="text"
             className="form-control block
           w-full
           px-3

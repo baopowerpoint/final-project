@@ -73,7 +73,7 @@ const Navbar = () => {
                 onClick={() => {
                   setCurrentPage("products");
                 }}
-                to="products"
+                to="products/all"
                 className={`text-xl ${
                   currentPage == "products" ? "font-700" : ""
                 } text-white pr-2 font-sans `}

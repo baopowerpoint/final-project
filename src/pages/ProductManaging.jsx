@@ -9,7 +9,19 @@ function ProductManaging() {
   const [category, setCategory] = useState(null);
   const [field, setField] = useState(null);
   const [order, setOrder] = useState(299);
-
+  const [cover, setCover] = useState(null);
+  const [OSO, setOSO] = useState(1);
+  const handleUpdateSet = async (id) => {
+    await updateDoc(doc(db, "posts", id), {
+      isSet: true,
+    });
+  };
+  const handleUpdateTime = async (id) => {
+    const date = new Date().getTime();
+    await updateDoc(doc(db, "posts", id), {
+      time: date,
+    });
+  };
   const handleUpdatePrice = async (id) => {
     const price = prompt();
     if (price) {
@@ -36,6 +48,20 @@ function ProductManaging() {
       });
     }
   };
+  const handleUpdateCover = async (id) => {
+    if (products && cover) {
+      const res = products.find((element) => element.id == id).imgUrls;
+      const index = res.indexOf(cover);
+
+      if (index > -1) {
+        res.splice(index, 1);
+        res.unshift(cover);
+        await updateDoc(doc(db, "posts", id), {
+          imgUrls: res,
+        });
+      }
+    }
+  };
   const handleUpdateTitle = async (id) => {
     const a = products.find((product) => product.id === id);
     const title = prompt("Title", a.title.slice(0, 2) + a.order);
@@ -49,6 +75,11 @@ function ProductManaging() {
     await updateDoc(doc(db, "posts", id), { order: order });
     setOrder(order + 1);
   };
+  const handleSetOSO = async (id) => {
+    await updateDoc(doc(db, "posts", id), { OSO: OSO });
+    setOSO(OSO + 1);
+  };
+
   useEffect(() => {
     if (products) {
       const filteredProducts = products.sort(
@@ -63,6 +94,53 @@ function ProductManaging() {
       if (category == "hoavai") {
         setFilteredProducts(
           products.filter((val) => val.category === "hoavai")
+        );
+      }
+      if (category == "outstanding") {
+        setFilteredProducts(
+          products
+            .filter(
+              (product) =>
+                product.title == "3DDK148" ||
+                product.title == "2DDK86" ||
+                product.title == "2DDK90" ||
+                product.title == "3DDK171" ||
+                product.title == "3DDK173" ||
+                product.title == "3DDK174" ||
+                product.title == "2DDK7" ||
+                product.title == "3DDK118" ||
+                product.title == "3DDK120" ||
+                product.title == "3DDK121" ||
+                product.title == "3DDK122" ||
+                product.title == "2DDK35" ||
+                product.title == "2DDK37" ||
+                product.title == "3DDK128" ||
+                product.title == "3DDK130" ||
+                product.title == "2DDK43" ||
+                product.title == "2DDK40" ||
+                product.title == "2DDK41" ||
+                product.title == "3DDK131" ||
+                product.title == "3DDK132" ||
+                product.title == "3DDK133" ||
+                product.title == "3DDK134" ||
+                product.title == "3DDK135" ||
+                product.title == "3DDK136" ||
+                product.title == "3DDK137" ||
+                product.title == "2DDK47" ||
+                product.title == "2DDK48" ||
+                product.title == "2DDK50" ||
+                product.title == "2DDK52" ||
+                product.title == "3DDK138" ||
+                product.title == "3DDK140" ||
+                product.title == "2DDK53" ||
+                product.title == "3DDK141" ||
+                product.title == "2DDK54" ||
+                product.title == "3DDK143" ||
+                product.title == "3DDK144" ||
+                product.title == "3DDK146" ||
+                product.title == "3DDK147"
+            )
+            .sort((a, b) => a.OSO - b.OSO) //tạm thời, sau bỏ filter
         );
       }
       if (category == "dinhket") {
@@ -100,6 +178,7 @@ function ProductManaging() {
             aria-label="Default select example"
           >
             <option value="">Các sản phẩm nổi bật</option>
+            <option value="outstanding">Nổi bật</option>
             <option value="dinhket">Đính kết</option>
             <option value="hoavai">Hoa vải</option>
             <option value="doda">Đồ da</option>
@@ -109,36 +188,49 @@ function ProductManaging() {
         </div>
         {filteredProducts &&
           filteredProducts.map((product) => (
-            <div className="flex mt-5">
-              <img
-                className="w-[200px] h-[200px]"
-                src={product.imgUrls[0]}
-                alt=""
-              />
+            <div className="flex mt-5" key={product.id}>
+              {product.imgUrls.map((imgUrl) => (
+                <img
+                  className={`w-[200px] h-[200px] cursor-pointer ${
+                    cover == imgUrl ? "w-[250px] h-[250px]" : ""
+                  }`}
+                  onClick={() => {
+                    setCover(imgUrl);
+                  }}
+                  src={imgUrl}
+                  alt=""
+                />
+              ))}
               <h1>{product.price.toLocaleString("pl-PL")}</h1>
               <h1 className="mx-10">{product.title}</h1>
               <h1 className="mx-10">{product.category}</h1>
+
+              {product.isSet && (
+                <h1 className="mx-10 text-blue font-700">set</h1>
+              )}
               {/* {product.wholeSale && (
                 <h1 className="mx-10">{product.wholeSale}</h1>
               )} */}
               {order && <h1 className="mx-10">{product.order}</h1>}
+              {/* {OSO && <h1 className="mx-10">{product.OSO}</h1>}//Nhung
+              san pham noi bat duoc sap xep */}
               {/* <h1>{product.title.substring(product.title.indexOf("D") + 1)}</h1> */}
-              <button
+              {/* <button
                 onClick={() => {
                   handleUpdatePrice(product.id);
                 }}
                 className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
               >
                 sửa giá
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 onClick={() => {
                   handleUpdateTitle(product.id);
                 }}
                 className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
               >
                 sửa tên
-              </button>
+              </button> */}
               {/* <button
                 onClick={() => {
                   handleUpdateWholeSale(product.id);
@@ -147,22 +239,22 @@ function ProductManaging() {
               >
                 sửa gia sx
               </button> */}
-              <button
+              {/* <button
                 onClick={() => {
                   handleAddOrder(product.id);
                 }}
                 className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
               >
                 Thêm thứ tự
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 onClick={() => {
                   handleDelete(product.id);
                 }}
                 className="bg-red h-fit  px-5 mx-5 text-light rounded-lg"
               >
                 Xóa
-              </button>
+              </button> */}
               {/* <div className="flex gap-1 flex-grow-0">
                 <select
                   onChange={(e) => {
@@ -187,6 +279,38 @@ function ProductManaging() {
                   sửa muc
                 </button>
               </div> */}
+              <button
+                onClick={() => {
+                  handleUpdateCover(product.id);
+                }}
+                className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
+              >
+                Đặt bìa
+              </button>
+              <button
+                onClick={() => {
+                  handleUpdateSet(product.id);
+                }}
+                className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
+              >
+                Đánh dấu là set
+              </button>
+              <button
+                onClick={() => {
+                  handleUpdateTime(product.id);
+                }}
+                className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
+              >
+                Lên đầu
+              </button>
+              {/* <button
+                className="bg-blue h-fit  px-5 mx-5 text-light rounded-lg"
+                onClick={() => {
+                  handleSetOSO(product.id);
+                }}
+              >
+                set OSO
+              </button> */}
             </div>
           ))}
       </div>

@@ -24,7 +24,8 @@ const CoursePrincipal = () => {
           để duy trì việc tiếp tục ở lại lớp cho năm kế tiếp).
         </p>
         <p className="text-left">
-          - HV đăng trả bài qua tin nhắn Zalo hoặc Facebook để được chữa bài.
+          - Học viên trả bài qua zalo{" "}
+          <span className="font-600">0964608302</span>
         </p>
         <p className="text-left">
           - Chụp ảnh trả bài/hỏi bài : chụp trực diện, góc nghiêng, mặt sau,
